@@ -3,7 +3,13 @@
     cmake -B build -DKOKKOS_VERSION=5.1.1      # change version here
     cmake --build build -j
     ./build/bench_branch                       # Q1
+    ./check_sass.sh build/bench_branch           # Q1: compare generated code
     ./build/tile_zero 0 0; ./build/tile_zero 8 8   # Q2
+
+Serial build for dev / LSP (host compiler, clean compile_commands.json):
+
+    cmake -B build-serial -DKOKKOS_BACKEND=SERIAL
+    ln -sf build-serial/compile_commands.json .    # clangd/nvim pick it up from the root
 
 Local Kokkos checkout instead of fetching: `-DKOKKOS_SRC_DIR=/path/to/kokkos`.
 Each version needs its own build dir (e.g. `-B build-5.1.1`).
